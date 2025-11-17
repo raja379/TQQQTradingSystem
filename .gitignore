@@ -1,0 +1,83 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+.nox/
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# AWS CDK
+infrastructure/node_modules/
+infrastructure/cdk.out/
+infrastructure/.env
+infrastructure/npm-debug.log*
+infrastructure/yarn-debug.log*
+infrastructure/yarn-error.log*
+
+# Lambda response files (test artifacts)
+response*.json
+
+# Local development
+*.log
+.cache/
+
+# Secrets (just in case)
+*.key
+*.pem
+config.json
+
+# Docker
+.dockerignore

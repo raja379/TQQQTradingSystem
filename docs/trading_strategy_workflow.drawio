@@ -1,0 +1,174 @@
+<mxfile host="app.diagrams.net" modified="2024-01-01T12:00:00.000Z" agent="5.0" etag="" version="22.1.0" type="device">
+  <diagram id="TradingStrategyWorkflow" name="Trading Strategy Development Workflow">
+    <mxGraphModel dx="1422" dy="730" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        
+        <!-- Start Node -->
+        <mxCell id="start" value="Start" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="80" y="40" width="120" height="60" as="geometry" />
+        </mxCell>
+        
+        <!-- Phase 1: Hypothesis Definition -->
+        <mxCell id="hypothesis" value="Define Hypothesis&lt;br/&gt;&lt;br/&gt;Example: IV Crush Post-Earnings&lt;br/&gt;• Sell calls/puts post-earnings&lt;br/&gt;• Buy back after IV crush" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="40" y="140" width="200" height="100" as="geometry" />
+        </mxCell>
+        
+        <!-- Phase 2: Initial Validation -->
+        <mxCell id="validation" value="Prove Hypothesis&lt;br/&gt;&lt;br/&gt;• Find supporting cases&lt;br/&gt;• Identify contradicting cases&lt;br/&gt;• Analyze edge conditions" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="40" y="280" width="200" height="100" as="geometry" />
+        </mxCell>
+        
+        <!-- Decision Diamond -->
+        <mxCell id="decision1" value="Sufficient&lt;br/&gt;Conviction?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="1">
+          <mxGeometry x="80" y="420" width="120" height="80" as="geometry" />
+        </mxCell>
+        
+        <!-- Refine Hypothesis -->
+        <mxCell id="refine" value="Refine Hypothesis&lt;br/&gt;&lt;br/&gt;• Adjust parameters&lt;br/&gt;• Modify conditions&lt;br/&gt;• Re-evaluate criteria" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1">
+          <mxGeometry x="280" y="410" width="160" height="100" as="geometry" />
+        </mxCell>
+        
+        <!-- Phase 3: Comprehensive Backtesting -->
+        <mxCell id="backtest" value="Comprehensive Backtesting&lt;br/&gt;&lt;br/&gt;• Large dataset analysis&lt;br/&gt;• Wide range of stocks&lt;br/&gt;• Multiple time periods&lt;br/&gt;• Various market conditions" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="1">
+          <mxGeometry x="40" y="540" width="200" height="120" as="geometry" />
+        </mxCell>
+        
+        <!-- Pattern Analysis -->
+        <mxCell id="patterns" value="Pattern Analysis&lt;br/&gt;&lt;br/&gt;• Test different patterns&lt;br/&gt;• Vary controllable inputs&lt;br/&gt;• Observe result changes&lt;br/&gt;• Statistical significance" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;" vertex="1" parent="1">
+          <mxGeometry x="280" y="540" width="180" height="120" as="geometry" />
+        </mxCell>
+        
+        <!-- Results Analysis -->
+        <mxCell id="results" value="Results Analysis&lt;br/&gt;&lt;br/&gt;• Performance metrics&lt;br/&gt;• Risk assessment&lt;br/&gt;• Drawdown analysis&lt;br/&gt;• Sharpe ratio calculation" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="520" y="540" width="180" height="120" as="geometry" />
+        </mxCell>
+        
+        <!-- Decision Diamond 2 -->
+        <mxCell id="decision2" value="Strategy&lt;br/&gt;Viable?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="1">
+          <mxGeometry x="280" y="700" width="120" height="80" as="geometry" />
+        </mxCell>
+        
+        <!-- Phase 4: Strategy Execution -->
+        <mxCell id="execution" value="Execute Strategy&lt;br/&gt;&lt;br/&gt;• Live trading setup&lt;br/&gt;• Risk management&lt;br/&gt;• Position sizing&lt;br/&gt;• Real-time monitoring" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="40" y="820" width="200" height="120" as="geometry" />
+        </mxCell>
+        
+        <!-- Monitoring -->
+        <mxCell id="monitoring" value="Performance Monitoring&lt;br/&gt;&lt;br/&gt;• Track P&amp;L&lt;br/&gt;• Monitor Greeks&lt;br/&gt;• Adjust positions&lt;br/&gt;• Risk controls" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="280" y="820" width="180" height="120" as="geometry" />
+        </mxCell>
+        
+        <!-- Optimization -->
+        <mxCell id="optimization" value="Continuous Optimization&lt;br/&gt;&lt;br/&gt;• Parameter tuning&lt;br/&gt;• Strategy refinement&lt;br/&gt;• Market adaptation&lt;br/&gt;• Performance review" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="1">
+          <mxGeometry x="520" y="820" width="180" height="120" as="geometry" />
+        </mxCell>
+        
+        <!-- Arrows -->
+        <mxCell id="arrow1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="start" target="hypothesis">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="arrow2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="hypothesis" target="validation">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="arrow3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="validation" target="decision1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="arrow4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="decision1" target="refine">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow4_label" value="No" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="arrow4">
+          <mxGeometry x="-0.1" y="2" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        
+        <mxCell id="arrow5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="refine" target="validation">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="360" y="330" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        
+        <mxCell id="arrow6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="decision1" target="backtest">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow6_label" value="Yes" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="arrow6">
+          <mxGeometry x="-0.1" y="2" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        
+        <mxCell id="arrow7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="backtest" target="patterns">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="arrow8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="patterns" target="results">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="arrow9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="results" target="decision2">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="610" y="740" />
+              <mxPoint x="340" y="740" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        
+        <mxCell id="arrow10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="decision2" target="refine">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="340" y="680" />
+              <mxPoint x="360" y="680" />
+              <mxPoint x="360" y="510" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="arrow10_label" value="No" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="arrow10">
+          <mxGeometry x="-0.1" y="2" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        
+        <mxCell id="arrow11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="decision2" target="execution">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="280" y="740" />
+              <mxPoint x="140" y="740" />
+              <mxPoint x="140" y="800" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="arrow11_label" value="Yes" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="arrow11">
+          <mxGeometry x="-0.1" y="2" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        
+        <mxCell id="arrow12" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="execution" target="monitoring">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="arrow13" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="monitoring" target="optimization">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="arrow14" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="optimization" target="monitoring">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="610" y="1000" />
+              <mxPoint x="370" y="1000" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

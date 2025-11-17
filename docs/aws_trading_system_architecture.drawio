@@ -1,0 +1,324 @@
+<mxfile host="app.diagrams.net" modified="2024-10-29T12:00:00.000Z" agent="5.0" etag="" version="22.1.0" type="device">
+  <diagram id="AWSTrading" name="AWS Trading System Architecture">
+    <mxGraphModel dx="1422" dy="730" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1400" pageHeight="980" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        
+        <!-- Title -->
+        <mxCell id="title" value="AWS Trading System Architecture" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=20;fontStyle=1;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="500" y="10" width="400" height="30" as="geometry" />
+        </mxCell>
+        
+        <!-- EventBridge -->
+        <mxCell id="eventbridge" value="Amazon EventBridge&lt;br/&gt;&lt;br/&gt;Cron Schedule:&lt;br/&gt;12:30 PM PST Daily&lt;br/&gt;cron(30 20 * * ? *)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FF9900;strokeColor=#000000;fontColor=#000000;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="50" y="70" width="180" height="100" as="geometry" />
+        </mxCell>
+        
+        <!-- Main Lambda Function -->
+        <mxCell id="main_lambda" value="Trading Lambda&lt;br/&gt;&lt;br/&gt;• Process trading rules&lt;br/&gt;• Orchestrate workflow&lt;br/&gt;• Log results" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FF9900;strokeColor=#000000;fontColor=#000000;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="300" y="70" width="180" height="100" as="geometry" />
+        </mxCell>
+        
+        <!-- Kelly Factor Lambda -->
+        <mxCell id="kelly_lambda" value="Kelly Factor Calculator&lt;br/&gt;&lt;br/&gt;• Historical analysis&lt;br/&gt;• Risk assessment&lt;br/&gt;• Position sizing" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FF9900;strokeColor=#000000;fontColor=#000000;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="550" y="70" width="180" height="100" as="geometry" />
+        </mxCell>
+        
+        <!-- Alpaca Connector Lambda -->
+        <mxCell id="alpaca_lambda" value="Alpaca Connector&lt;br/&gt;&lt;br/&gt;• Execute trades&lt;br/&gt;• Order management&lt;br/&gt;• Portfolio updates" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FF9900;strokeColor=#000000;fontColor=#000000;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="800" y="70" width="180" height="100" as="geometry" />
+        </mxCell>
+        
+        <!-- YFinance Connector Lambda -->
+        <mxCell id="yfinance_lambda" value="YFinance Connector&lt;br/&gt;&lt;br/&gt;• Historical data&lt;br/&gt;• Market analysis&lt;br/&gt;• Price feeds" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FF9900;strokeColor=#000000;fontColor=#000000;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="1050" y="70" width="180" height="100" as="geometry" />
+        </mxCell>
+        
+        <!-- CloudWatch Logs -->
+        <mxCell id="cloudwatch_logs" value="CloudWatch Logs&lt;br/&gt;&lt;br/&gt;• Rule execution logs&lt;br/&gt;• Trading results&lt;br/&gt;• Performance metrics&lt;br/&gt;• Error tracking" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#146EB4;strokeColor=#000000;fontColor=#FFFFFF;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="300" y="220" width="180" height="120" as="geometry" />
+        </mxCell>
+        
+        <!-- DynamoDB -->
+        <mxCell id="dynamodb" value="DynamoDB&lt;br/&gt;Trading Transactions&lt;br/&gt;&lt;br/&gt;PK: Date (YYYY-MM-DD)&lt;br/&gt;SK: Stock Ticker Symbol&lt;br/&gt;&lt;br/&gt;Attributes:&lt;br/&gt;• Transaction Type&lt;br/&gt;• Quantity&lt;br/&gt;• Price&lt;br/&gt;• Kelly Factor&lt;br/&gt;• Timestamp" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#3F48CC;strokeColor=#000000;fontColor=#FFFFFF;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="550" y="220" width="180" height="140" as="geometry" />
+        </mxCell>
+        
+        <!-- SQS DLQ -->
+        <mxCell id="dlq" value="SQS Dead Letter Queue&lt;br/&gt;&lt;br/&gt;• Failed events&lt;br/&gt;• Processing errors&lt;br/&gt;• Retry mechanism&lt;br/&gt;• Manual intervention" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#D13212;strokeColor=#000000;fontColor=#FFFFFF;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="50" y="220" width="180" height="120" as="geometry" />
+        </mxCell>
+        
+        <!-- CloudWatch Alarms -->
+        <mxCell id="alarms" value="CloudWatch Alarms&lt;br/&gt;&lt;br/&gt;• DLQ message count&lt;br/&gt;• Lambda errors&lt;br/&gt;• Cost thresholds&lt;br/&gt;• Performance metrics" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#146EB4;strokeColor=#000000;fontColor=#FFFFFF;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="800" y="220" width="180" height="120" as="geometry" />
+        </mxCell>
+        
+        <!-- SNS for Notifications -->
+        <mxCell id="sns" value="SNS Notifications&lt;br/&gt;&lt;br/&gt;• DLQ alerts&lt;br/&gt;• Cost alerts&lt;br/&gt;• Trade notifications&lt;br/&gt;• System health" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#D13212;strokeColor=#000000;fontColor=#FFFFFF;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="1050" y="220" width="180" height="120" as="geometry" />
+        </mxCell>
+        
+        <!-- Cost Explorer -->
+        <mxCell id="cost_explorer" value="AWS Cost Explorer&lt;br/&gt;&amp; Budgets&lt;br/&gt;&lt;br/&gt;• Lambda costs&lt;br/&gt;• DynamoDB usage&lt;br/&gt;• API call costs&lt;br/&gt;• Budget alerts" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#146EB4;strokeColor=#000000;fontColor=#FFFFFF;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="300" y="400" width="180" height="120" as="geometry" />
+        </mxCell>
+        
+        <!-- External APIs -->
+        <mxCell id="alpaca_api" value="Alpaca API&lt;br/&gt;&lt;br/&gt;• Live trading&lt;br/&gt;• Order execution&lt;br/&gt;• Portfolio data" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E1D5E7;strokeColor=#9673A6;fontColor=#000000;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="800" y="400" width="180" height="80" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="yfinance_api" value="Yahoo Finance API&lt;br/&gt;&lt;br/&gt;• Historical prices&lt;br/&gt;• Market data&lt;br/&gt;• Technical indicators" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E1D5E7;strokeColor=#9673A6;fontColor=#000000;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="1050" y="400" width="180" height="80" as="geometry" />
+        </mxCell>
+        
+        <!-- Security -->
+        <mxCell id="secrets" value="AWS Secrets Manager&lt;br/&gt;&lt;br/&gt;• API keys&lt;br/&gt;• Credentials&lt;br/&gt;• Configuration" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#67AB9F;strokeColor=#000000;fontColor=#000000;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="550" y="400" width="180" height="120" as="geometry" />
+        </mxCell>
+        
+        <!-- Data Flow Arrows -->
+        <mxCell id="arrow1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=3;strokeColor=#FF6B35;" edge="1" parent="1" source="eventbridge" target="main_lambda">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow1_label" value="Trigger" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=12;fontStyle=1;fontColor=#FF6B35;" vertex="1" connectable="0" parent="arrow1">
+          <mxGeometry x="-0.1" y="2" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        
+        <mxCell id="arrow2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=3;strokeColor=#1BA1E2;" edge="1" parent="1" source="main_lambda" target="kelly_lambda">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow2_label" value="Calculate" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=12;fontStyle=1;fontColor=#1BA1E2;" vertex="1" connectable="0" parent="arrow2">
+          <mxGeometry x="-0.1" y="2" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        
+        <mxCell id="arrow3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=3;strokeColor=#1BA1E2;" edge="1" parent="1" source="kelly_lambda" target="alpaca_lambda">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow3_label" value="Execute" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=12;fontStyle=1;fontColor=#1BA1E2;" vertex="1" connectable="0" parent="arrow3">
+          <mxGeometry x="-0.1" y="2" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        
+        <mxCell id="arrow4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=3;strokeColor=#1BA1E2;" edge="1" parent="1" source="kelly_lambda" target="yfinance_lambda">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow4_label" value="Data" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=12;fontStyle=1;fontColor=#1BA1E2;" vertex="1" connectable="0" parent="arrow4">
+          <mxGeometry x="-0.1" y="2" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        
+        <mxCell id="arrow5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=3;strokeColor=#32CD32;" edge="1" parent="1" source="main_lambda" target="cloudwatch_logs">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow5_label" value="Logs" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=12;fontStyle=1;fontColor=#32CD32;" vertex="1" connectable="0" parent="arrow5">
+          <mxGeometry x="-0.1" y="2" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        
+        <mxCell id="arrow6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=3;strokeColor=#32CD32;" edge="1" parent="1" source="main_lambda" target="dynamodb">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="480" y="120" />
+              <mxPoint x="520" y="120" />
+              <mxPoint x="520" y="290" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="arrow6_label" value="Store" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=12;fontStyle=1;fontColor=#32CD32;" vertex="1" connectable="0" parent="arrow6">
+          <mxGeometry x="-0.1" y="2" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        
+        <mxCell id="arrow7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=3;strokeColor=#FF0000;" edge="1" parent="1" source="main_lambda" target="dlq">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="300" y="140" />
+              <mxPoint x="260" y="140" />
+              <mxPoint x="260" y="280" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="arrow7_label" value="Errors" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=12;fontStyle=1;fontColor=#FF0000;" vertex="1" connectable="0" parent="arrow7">
+          <mxGeometry x="-0.1" y="2" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        
+        <mxCell id="arrow8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=3;strokeColor=#FFA500;" edge="1" parent="1" source="dlq" target="alarms">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="230" y="280" />
+              <mxPoint x="740" y="280" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="arrow8_label" value="Monitor" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=12;fontStyle=1;fontColor=#FFA500;" vertex="1" connectable="0" parent="arrow8">
+          <mxGeometry x="-0.1" y="2" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        
+        <mxCell id="arrow9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=3;strokeColor=#FFA500;" edge="1" parent="1" source="alarms" target="sns">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow9_label" value="Alert" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=12;fontStyle=1;fontColor=#FFA500;" vertex="1" connectable="0" parent="arrow9">
+          <mxGeometry x="-0.1" y="2" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        
+        <mxCell id="arrow10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=3;strokeColor=#800080;" edge="1" parent="1" source="alpaca_lambda" target="alpaca_api">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="890" y="170" />
+              <mxPoint x="890" y="380" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="arrow10_label" value="Trade" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=12;fontStyle=1;fontColor=#800080;" vertex="1" connectable="0" parent="arrow10">
+          <mxGeometry x="-0.1" y="2" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        
+        <mxCell id="arrow11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=3;strokeColor=#800080;" edge="1" parent="1" source="yfinance_lambda" target="yfinance_api">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1140" y="170" />
+              <mxPoint x="1140" y="380" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="arrow11_label" value="Fetch" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=12;fontStyle=1;fontColor=#800080;" vertex="1" connectable="0" parent="arrow11">
+          <mxGeometry x="-0.1" y="2" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        
+        <mxCell id="arrow12" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#666666;dashed=1;" edge="1" parent="1" source="secrets" target="alpaca_lambda">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="730" y="460" />
+              <mxPoint x="760" y="460" />
+              <mxPoint x="760" y="190" />
+              <mxPoint x="890" y="190" />
+              <mxPoint x="890" y="170" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="arrow12_label" value="Credentials" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;fontColor=#666666;" vertex="1" connectable="0" parent="arrow12">
+          <mxGeometry x="-0.1" y="2" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        
+        <mxCell id="arrow13" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=3;strokeColor=#FFA500;" edge="1" parent="1" source="cost_explorer" target="alarms">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="480" y="460" />
+              <mxPoint x="740" y="460" />
+              <mxPoint x="740" y="280" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="arrow13_label" value="Cost Monitor" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=12;fontStyle=1;fontColor=#FFA500;" vertex="1" connectable="0" parent="arrow13">
+          <mxGeometry x="-0.1" y="2" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- Legend -->
+        <mxCell id="legend_box" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;" vertex="1" parent="1">
+          <mxGeometry x="50" y="580" width="900" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="legend_title" value="Architecture Legend" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=16;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="450" y="590" width="150" height="30" as="geometry" />
+        </mxCell>
+        
+        <!-- Legend Items Row 1 -->
+        <mxCell id="legend1" value="Data Flow" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="80" y="630" width="80" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="legend1_line" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=3;strokeColor=#1BA1E2;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="170" y="640" as="sourcePoint" />
+            <mxPoint x="220" y="640" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+        <mxCell id="legend2" value="Error Flow" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="250" y="630" width="80" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="legend2_line" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=3;strokeColor=#FF0000;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="340" y="640" as="sourcePoint" />
+            <mxPoint x="390" y="640" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+        <mxCell id="legend3" value="Monitoring" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="420" y="630" width="80" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="legend3_line" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=3;strokeColor=#FFA500;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="510" y="640" as="sourcePoint" />
+            <mxPoint x="560" y="640" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+        <mxCell id="legend4" value="External API" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="590" y="630" width="80" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="legend4_line" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=3;strokeColor=#800080;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="680" y="640" as="sourcePoint" />
+            <mxPoint x="730" y="640" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- Legend Items Row 2 -->
+        <mxCell id="legend5" value="Logging" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="80" y="660" width="80" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="legend5_line" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=3;strokeColor=#32CD32;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="170" y="670" as="sourcePoint" />
+            <mxPoint x="220" y="670" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+        <mxCell id="legend6" value="Trigger" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="250" y="660" width="80" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="legend6_line" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=3;strokeColor=#FF6B35;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="340" y="670" as="sourcePoint" />
+            <mxPoint x="390" y="670" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+        <mxCell id="legend7" value="Credentials" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="420" y="660" width="80" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="legend7_line" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#666666;dashed=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="510" y="670" as="sourcePoint" />
+            <mxPoint x="560" y="670" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
