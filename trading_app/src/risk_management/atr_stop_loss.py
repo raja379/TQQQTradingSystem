@@ -8,7 +8,7 @@ from datetime import datetime, timedelta
 import logging
 import pandas as pd
 
-from risk_management.stop_loss_strategy import StopLossStrategy
+from src.risk_management.stop_loss_strategy import StopLossStrategy
 
 logger = logging.getLogger(__name__)
 

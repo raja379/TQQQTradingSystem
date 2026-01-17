@@ -6,7 +6,7 @@ from typing import Optional
 from dataclasses import dataclass
 import logging
 
-from risk_management.stop_loss_strategy import StopLossStrategy
+from src.risk_management.stop_loss_strategy import StopLossStrategy
 
 logger = logging.getLogger(__name__)
 

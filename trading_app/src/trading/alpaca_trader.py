@@ -13,7 +13,7 @@ from typing import Dict, Optional, List, TYPE_CHECKING
 from dataclasses import dataclass
 
 if TYPE_CHECKING:
-    from risk_management.stop_loss_strategy import StopLossStrategy
+    from src.risk_management.stop_loss_strategy import StopLossStrategy
 
 logger = logging.getLogger(__name__)
 
