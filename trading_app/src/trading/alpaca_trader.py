@@ -9,8 +9,11 @@ import os
 import boto3
 import requests
 from datetime import datetime
-from typing import Dict, Optional, List
+from typing import Dict, Optional, List, TYPE_CHECKING
 from dataclasses import dataclass
+
+if TYPE_CHECKING:
+    from src.risk_management.stop_loss_strategy import StopLossStrategy
 
 logger = logging.getLogger(__name__)
 
@@ -27,17 +30,20 @@ class AlpacaOrder:
     status: str
     timestamp: str
     reason: str
+    stop_price: Optional[float] = None
+    take_profit_price: Optional[float] = None
 
 
 class AlpacaTrader:
     """Alpaca trading client with simple EMA strategy."""
-    
-    def __init__(self, paper_trading: bool = True):
+
+    def __init__(self, paper_trading: bool = True, stop_loss_strategy: Optional['StopLossStrategy'] = None):
         """
         Initialize Alpaca trader.
-        
+
         Args:
             paper_trading: Use paper trading (True) or live trading (False)
+            stop_loss_strategy: Optional stop loss strategy for risk management
         """
         self.paper_trading = paper_trading
         self.base_url = "https://paper-api.alpaca.markets" if paper_trading else "https://api.alpaca.markets"
@@ -48,7 +54,24 @@ class AlpacaTrader:
             "Content-Type": "application/json"
         }
         self.orders = []
+        self.stop_loss_strategy = stop_loss_strategy
+
+        if self.stop_loss_strategy:
+            logger.info(f"Initialized with stop loss strategy: {self.stop_loss_strategy.get_strategy_name()}")
     
+    def set_stop_loss_strategy(self, strategy: Optional['StopLossStrategy']) -> None:
+        """
+        Set or change the stop loss strategy at runtime.
+
+        Args:
+            strategy: Stop loss strategy to use, or None to disable
+        """
+        self.stop_loss_strategy = strategy
+        if strategy:
+            logger.info(f"Stop loss strategy updated: {strategy.get_strategy_name()}")
+        else:
+            logger.info("Stop loss strategy disabled")
+
     def _get_alpaca_credentials(self) -> tuple:
         """Get Alpaca API credentials from AWS Secrets Manager."""
         try:
@@ -145,17 +168,29 @@ class AlpacaTrader:
             logger.error(f"Error in sell decision for {symbol}: {str(e)}")
             return False, f"Error in sell decision: {str(e)}"
     
-    def place_buy_order(self, symbol: str, price: float, reason: str, quantity: int = None) -> Optional[AlpacaOrder]:
-        """Place a buy order for specified quantity."""
+    def place_buy_order(self, symbol: str, price: float, reason: str, quantity: int = None, use_stop_loss: bool = True) -> Optional[AlpacaOrder]:
+        """
+        Place a buy order for specified quantity.
+
+        Args:
+            symbol: Stock ticker symbol
+            price: Current market price (for estimation)
+            reason: Reason for the order
+            quantity: Number of shares to buy
+            use_stop_loss: Whether to use stop loss strategy if available
+
+        Returns:
+            AlpacaOrder object or None if failed
+        """
         try:
             if not self.api_key or not self.secret_key:
                 logger.error("Alpaca credentials not available")
                 return None
-            
+
             if not quantity or quantity <= 0:
                 logger.warning(f"Cannot buy {symbol}: invalid quantity {quantity}")
                 return None
-            
+
             order_data = {
                 "symbol": symbol,
                 "qty": str(quantity),
@@ -163,13 +198,39 @@ class AlpacaTrader:
                 "type": "market",
                 "time_in_force": "day"
             }
-            
+
+            # Calculate stop loss and take profit if strategy is set
+            stop_price = None
+            take_profit_price = None
+
+            if use_stop_loss and self.stop_loss_strategy:
+                try:
+                    stop_price = self.stop_loss_strategy.calculate_stop_price(price, symbol)
+                    take_profit_price = self.stop_loss_strategy.calculate_take_profit_price(price, symbol)
+
+                    # Add bracket order parameters
+                    order_data["order_class"] = "bracket"
+                    order_data["stop_loss"] = {"stop_price": str(stop_price)}
+
+                    if take_profit_price:
+                        order_data["take_profit"] = {"limit_price": str(take_profit_price)}
+
+                    logger.info(
+                        f"{symbol}: Bracket order - Entry ${price:.2f}, "
+                        f"Stop ${stop_price:.2f}, Target ${take_profit_price:.2f if take_profit_price else 'N/A'} "
+                        f"({self.stop_loss_strategy.get_strategy_name()})"
+                    )
+
+                except Exception as e:
+                    logger.error(f"Error calculating stop loss for {symbol}: {str(e)}")
+                    # Continue with regular order if stop loss calculation fails
+
             url = f"{self.base_url}/v2/orders"
             response = requests.post(url, headers=self.headers, json=order_data, timeout=30)
             response.raise_for_status()
-            
+
             order_result = response.json()
-            
+
             alpaca_order = AlpacaOrder(
                 symbol=symbol,
                 action="BUY",
@@ -179,13 +240,21 @@ class AlpacaTrader:
                 order_id=order_result.get('id'),
                 status=order_result.get('status'),
                 timestamp=datetime.now().isoformat(),
-                reason=reason
+                reason=reason,
+                stop_price=stop_price,
+                take_profit_price=take_profit_price
             )
-            
+
             self.orders.append(alpaca_order)
-            logger.info(f"BUY order placed: {quantity} shares of {symbol} at ${price:.2f} (Order ID: {alpaca_order.order_id})")
+
+            order_type = "Bracket BUY" if stop_price else "BUY"
+            logger.info(
+                f"{order_type} order placed: {quantity} shares of {symbol} at ${price:.2f} "
+                f"(Order ID: {alpaca_order.order_id})"
+            )
+
             return alpaca_order
-            
+
         except Exception as e:
             logger.error(f"Error placing buy order for {symbol}: {str(e)}")
             return None
@@ -330,61 +399,44 @@ class AlpacaTrader:
         return executed_orders
     
     def buy_tqqq_with_all_funds(self, tqqq_price: float) -> Optional[AlpacaOrder]:
-        """Buy TQQQ with all available buying power."""
+        """
+        Buy TQQQ with all available buying power.
+
+        Uses stop loss strategy if configured.
+        """
         try:
             # Get current account info for buying power
             account = self.get_account()
             if not account:
                 return None
-            
+
             buying_power = float(account.get('buying_power', 0))
-            
+
             # Reserve small amount for market fluctuations
             available_cash = buying_power * 0.95  # Use 95% to avoid insufficient funds
-            
+
             if available_cash < tqqq_price:
                 logger.warning(f"Insufficient buying power: ${buying_power:.2f} available, TQQQ price ${tqqq_price:.2f}")
                 return None
-            
+
             # Calculate quantity
             quantity = int(available_cash / tqqq_price)
-            
+
             if quantity <= 0:
                 logger.warning(f"Cannot buy TQQQ: insufficient funds for even 1 share")
                 return None
-            
+
             logger.info(f"Buying {quantity} shares of TQQQ with ${available_cash:.2f} buying power")
-            
-            order_data = {
-                "symbol": "TQQQ",
-                "qty": str(quantity),
-                "side": "buy",
-                "type": "market",
-                "time_in_force": "day"
-            }
-            
-            url = f"{self.base_url}/v2/orders"
-            response = requests.post(url, headers=self.headers, json=order_data, timeout=30)
-            response.raise_for_status()
-            
-            order_result = response.json()
-            
-            alpaca_order = AlpacaOrder(
+
+            # Use place_buy_order which handles stop loss strategy
+            return self.place_buy_order(
                 symbol="TQQQ",
-                action="BUY",
-                quantity=quantity,
                 price=tqqq_price,
-                amount=quantity * tqqq_price,
-                order_id=order_result.get('id'),
-                status=order_result.get('status'),
-                timestamp=datetime.now().isoformat(),
-                reason="Buying TQQQ with all available funds (bullish signal)"
+                reason="Buying TQQQ with all available funds (bullish signal)",
+                quantity=quantity,
+                use_stop_loss=True
             )
-            
-            self.orders.append(alpaca_order)
-            logger.info(f"BUY order placed: {quantity} shares of TQQQ at ${tqqq_price:.2f} (Order ID: {alpaca_order.order_id})")
-            return alpaca_order
-            
+
         except Exception as e:
             logger.error(f"Error buying TQQQ with all funds: {str(e)}")
             return None
@@ -458,6 +510,7 @@ class AlpacaTrader:
             "buying_power": float(account.get('buying_power', 0)),
             "tqqq_signal": signal,
             "tqqq_price": tqqq_price,
+            "stop_loss_strategy": self.stop_loss_strategy.get_strategy_name() if self.stop_loss_strategy else "None",
             "total_orders": len(executed_orders),
             "buys": len(buys),
             "sells": len(sells),
@@ -472,7 +525,9 @@ class AlpacaTrader:
                     "amount": o.amount,
                     "order_id": o.order_id,
                     "status": o.status,
-                    "reason": o.reason
+                    "reason": o.reason,
+                    "stop_price": o.stop_price,
+                    "take_profit_price": o.take_profit_price
                 }
                 for o in executed_orders
             ],
